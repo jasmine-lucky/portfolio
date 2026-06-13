@@ -1,0 +1,24 @@
+import type { Metadata } from "next";
+import "./globals.css";
+
+export const metadata: Metadata = {
+  title: "温梓清 · 内容运营人",
+  description:
+    "我做了540万次曝光，现在想用AI把它变成5400万 — 温梓清的个人作品集",
+  openGraph: {
+    title: "温梓清 · 内容运营人",
+    description: "我做了540万次曝光，现在想用AI把它变成5400万",
+  },
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="zh-CN">
+      <body className="font-sans antialiased">{children}</body>
+    </html>
+  );
+}
