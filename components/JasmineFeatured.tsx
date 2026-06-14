@@ -159,27 +159,16 @@ export default function JasmineFeatured() {
               <h3 className="text-sm font-medium text-ink tracking-wide mb-4 flex items-center gap-2">
                 <span>📺</span> 账号视频
               </h3>
-              <div className="relative w-full aspect-[16/9] bg-[#D9CCB8]/20 rounded-lg flex items-center justify-center overflow-hidden">
-                {/* Placeholder — replace with actual video embed */}
-                <div className="text-center">
-                  <div className="text-4xl mb-3">🎥</div>
-                  <p className="text-sm text-ink-secondary tracking-wider">
-                    视频素材待补充
-                  </p>
-                  <p className="text-xs text-ink-secondary/50 mt-1">
-                    请将视频文件放入 public/videos/ 文件夹
-                  </p>
-                </div>
-                {/* Uncomment when video is ready:
+              <div className="relative w-full aspect-[16/9] bg-[#D9CCB8]/20 rounded-lg overflow-hidden">
                 <video
                   controls
                   playsInline
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-contain bg-black"
                   poster="/images/accounts/jasmine-1.png"
                 >
                   <source src="/videos/jasmine-showcase.mp4" type="video/mp4" />
+                  您的浏览器不支持视频播放
                 </video>
-                */}
               </div>
             </div>
           </motion.div>
