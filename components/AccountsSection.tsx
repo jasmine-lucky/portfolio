@@ -20,7 +20,7 @@ const accounts = [
     link: "https://www.xiaohongshu.com/user/profile/65524ed00000000002013808?xsec_token=ABXEoqwjGTpn_ddtr_R6NKzJUNT5Ho_DQbHByzZx-hUdk%3D&xsec_source=pc_search",
   },
   {
-    name: "情绪号",
+    name: "小蓝性别女",
     platform: "小红书 · 情感区",
     followers: "500+ 粉丝",
     metric: "AI辅助·从0孵化",

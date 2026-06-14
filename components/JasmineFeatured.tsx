@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import ImageLightbox from "./ImageLightbox";
 
@@ -11,38 +11,35 @@ const stats = [
   { value: "16+篇", label: "爆款笔记" },
 ];
 
-// Placeholder covers — user to replace with real video cover screenshots
-const videoCovers = [
-  { src: "/images/accounts/jasmine-1.png", title: "发型改造教程" },
-  { src: "/images/accounts/jasmine-2.png", title: "菱形脸穿搭" },
-  { src: "/images/accounts/jasmine-3.png", title: "短发造型" },
-];
+const coverSlots = Array.from({ length: 6 }, (_, i) => ({
+  id: i,
+  title: `爆款封面 ${i + 1}`,
+  image: `/images/accounts/jasmine-${Math.min(i + 1, 3)}.png`,
+  link: "",
+}));
 
 export default function JasmineFeatured() {
-  const [currentCover, setCurrentCover] = useState(0);
+  const [lightboxSrc, setLightboxSrc] = useState("");
+  const [lightboxAlt, setLightboxAlt] = useState("");
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
-  const nextCover = useCallback(() => {
-    setCurrentCover((prev) => (prev + 1) % videoCovers.length);
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(nextCover, 3500);
-    return () => clearInterval(interval);
-  }, [nextCover]);
+  const openLightbox = (src: string, alt: string) => {
+    setLightboxSrc(src);
+    setLightboxAlt(alt);
+    setLightboxOpen(true);
+  };
 
   return (
     <section id="jasmine" className="py-20 md:py-28 px-6 md:px-12 bg-[#F5F0E8]/50 relative overflow-hidden">
-      {/* Decorative accent line */}
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-mint/40 to-transparent" />
 
       <div className="max-w-6xl mx-auto">
-        {/* Section header */}
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+          transition={{ duration: 0.6 }}
           className="mb-10"
         >
           <div className="flex items-center gap-3 mb-3">
@@ -56,125 +53,110 @@ export default function JasmineFeatured() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 md:gap-8">
-          {/* Left: Stats dashboard + Description */}
+        {/* Stats dashboard */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1, duration: 0.5 }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10"
+        >
+          {stats.map((stat) => (
+            <div key={stat.label} className="card p-4 md:p-5 text-center">
+              <div
+                className="text-2xl md:text-3xl font-bold text-mint mb-1 tracking-tight"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                {stat.value}
+              </div>
+              <div className="text-[11px] md:text-xs text-ink-secondary tracking-widest">
+                {stat.label}
+              </div>
+            </div>
+          ))}
+        </motion.div>
+
+        {/* === Full-width viral covers row (6 slots) === */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+          className="mb-10"
+        >
+          <h3 className="text-sm font-medium text-ink tracking-wide mb-4 flex items-center gap-2">
+            <span>🎬</span> 爆款作品封面
+            <span className="text-[10px] text-ink-secondary font-normal ml-auto">
+              点击查看大图
+            </span>
+          </h3>
+          <div className="grid grid-cols-3 md:grid-cols-6 gap-3 md:gap-4">
+            {coverSlots.map((slot) => (
+              <div
+                key={slot.id}
+                onClick={() => openLightbox(slot.image, slot.title)}
+                className="card cursor-pointer group aspect-[3/4] bg-[#D9CCB8]/15 rounded-xl overflow-hidden flex items-center justify-center hover:border-mint/50 transition-all"
+              >
+                <img
+                  src={slot.image}
+                  alt={slot.title}
+                  className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-400"
+                />
+              </div>
+            ))}
+          </div>
+          <p className="text-[10px] text-ink-secondary/50 text-center mt-3 tracking-wide">
+            ▲ 请替换为Jasmine账号最优质的6条爆款笔记封面
+          </p>
+        </motion.div>
+
+        {/* Content strategy + Video side by side */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -15 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.15, duration: 0.5 }}
-            className="lg:col-span-2 space-y-5"
+            transition={{ delay: 0.25, duration: 0.45 }}
+            className="card p-5 md:p-6"
           >
-            {/* Stats grid */}
-            <div className="grid grid-cols-2 gap-3">
-              {stats.map((stat) => (
-                <div key={stat.label} className="card p-4 md:p-5 text-center">
-                  <div
-                    className="text-2xl md:text-3xl font-bold text-mint mb-1 tracking-tight"
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
-                    {stat.value}
-                  </div>
-                  <div className="text-[11px] md:text-xs text-ink-secondary tracking-widest">
-                    {stat.label}
-                  </div>
-                </div>
+            <h3 className="text-sm font-medium text-ink tracking-wide mb-3">
+              🎯 内容定位
+            </h3>
+            <p className="text-sm text-ink-secondary leading-relaxed">
+              主打「菱形脸 + 短发」的发型与拍照技巧，核心解决高颧骨、头型不流畅、上镜显脸大等痛点。
+              面向18-28岁学生与职场新人，用原相机真实教程建立信任，差异化于精修棚拍类时尚内容。
+            </p>
+            <div className="flex flex-wrap gap-2 mt-4">
+              {["菱形脸", "发型教程", "原相机", "真实感"].map((tag) => (
+                <span key={tag} className="mint-tag">{tag}</span>
               ))}
-            </div>
-
-            {/* Content strategy */}
-            <div className="card p-5 md:p-6">
-              <h3 className="text-sm font-medium text-ink tracking-wide mb-3">
-                🎯 内容定位
-              </h3>
-              <p className="text-sm text-ink-secondary leading-relaxed">
-                主打「菱形脸 + 短发」的发型与拍照技巧，核心解决高颧骨、头型不流畅、上镜显脸大等痛点。
-                面向18-28岁学生与职场新人，用原相机真实教程建立信任，差异化于精修棚拍类时尚内容。
-              </p>
-              <div className="flex flex-wrap gap-2 mt-4">
-                {["菱形脸", "发型教程", "原相机", "真实感"].map((tag) => (
-                  <span key={tag} className="mint-tag">{tag}</span>
-                ))}
-              </div>
             </div>
           </motion.div>
 
-          {/* Right: Video cover carousel + Video embed */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
+            initial={{ opacity: 0, x: 15 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.25, duration: 0.5 }}
-            className="lg:col-span-3 space-y-5"
+            transition={{ delay: 0.3, duration: 0.45 }}
+            className="card p-4 md:p-6"
           >
-            {/* Cover carousel */}
-            <div className="card p-4 md:p-6">
-              <h3 className="text-sm font-medium text-ink tracking-wide mb-4 flex items-center gap-2">
-                <span>🎬</span> 精选内容轮播
-                <span className="text-[10px] text-ink-secondary font-normal ml-auto">
-                  点击查看大图
-                </span>
-              </h3>
-              <div
-                className="relative w-full aspect-[16/9] bg-[#D9CCB8]/20 rounded-lg overflow-hidden cursor-pointer"
-                onClick={() => setLightboxOpen(true)}
+            <h3 className="text-sm font-medium text-ink tracking-wide mb-4 flex items-center gap-2">
+              <span>📺</span> 账号视频
+            </h3>
+            <div className="relative w-full aspect-[16/9] bg-black rounded-lg overflow-hidden">
+              <video
+                controls
+                playsInline
+                className="w-full h-full object-contain"
+                poster="/images/accounts/jasmine-1.png"
               >
-                {videoCovers.map((cover, i) => (
-                  <div
-                    key={i}
-                    className={`absolute inset-0 transition-opacity duration-600 ${
-                      i === currentCover ? "opacity-100" : "opacity-0"
-                    }`}
-                  >
-                    <img
-                      src={cover.src}
-                      alt={cover.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                ))}
-                {/* Overlay info */}
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-dark/70 to-transparent p-4">
-                  <p className="text-white text-sm tracking-wide">
-                    {videoCovers[currentCover].title}
-                  </p>
-                </div>
-                {/* Dots */}
-                <div className="absolute top-3 right-3 flex gap-1.5">
-                  {videoCovers.map((_, i) => (
-                    <button
-                      key={i}
-                      onClick={(e) => { e.stopPropagation(); setCurrentCover(i); }}
-                      className={`w-2 h-2 rounded-full transition-all ${
-                        i === currentCover ? "bg-mint w-5" : "bg-white/50"
-                      }`}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Video embed placeholder */}
-            <div className="card p-4 md:p-6">
-              <h3 className="text-sm font-medium text-ink tracking-wide mb-4 flex items-center gap-2">
-                <span>📺</span> 账号视频
-              </h3>
-              <div className="relative w-full aspect-[16/9] bg-[#D9CCB8]/20 rounded-lg overflow-hidden">
-                <video
-                  controls
-                  playsInline
-                  className="w-full h-full object-contain bg-black"
-                  poster="/images/accounts/jasmine-1.png"
-                >
-                  <source src="/videos/jasmine-showcase.mp4" type="video/mp4" />
-                  您的浏览器不支持视频播放
-                </video>
-              </div>
+                <source src="/videos/jasmine-showcase.mp4" type="video/mp4" />
+              </video>
             </div>
           </motion.div>
         </div>
 
-        {/* Bottom insight quote */}
+        {/* Bottom quote */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -190,10 +172,9 @@ export default function JasmineFeatured() {
         </motion.div>
       </div>
 
-      {/* Lightbox */}
       <ImageLightbox
-        src={videoCovers[currentCover].src}
-        alt={videoCovers[currentCover].title}
+        src={lightboxSrc}
+        alt={lightboxAlt}
         isOpen={lightboxOpen}
         onClose={() => setLightboxOpen(false)}
       />

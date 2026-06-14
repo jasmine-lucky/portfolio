@@ -10,6 +10,7 @@ import EntranceAnimation from "@/components/EntranceAnimation";
 import Hero from "@/components/Hero";
 import FlowingMenu from "@/components/FlowingMenu";
 import JasmineFeatured from "@/components/JasmineFeatured";
+import OverseasSection from "@/components/OverseasSection";
 import AccountsSection from "@/components/AccountsSection";
 import Methodology from "@/components/Methodology";
 import WorkExperience from "@/components/WorkExperience";
@@ -20,6 +21,7 @@ import Footer from "@/components/Footer";
 
 const menuItems = [
   { link: "#jasmine", text: "专栏" },
+  { link: "#overseas", text: "海外" },
   { link: "#accounts", text: "作品" },
   { link: "#experience", text: "经历" },
   { link: "#contact", text: "联系" },
@@ -54,6 +56,7 @@ export default function Home() {
           speed={18}
         />
         <JasmineFeatured />
+        <OverseasSection />
         <AccountsSection />
         <Methodology />
         <WorkExperience />

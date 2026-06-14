@@ -9,7 +9,7 @@ interface Props {
 
 const numbers = [
   { value: "540万", label: "曝光" },
-  { value: "16篇", label: "爆文" },
+  { value: "跨国", label: "运营经验" },
   { value: "5959", label: "粉丝" },
   { value: "19.9万", label: "赞藏" },
 ];
