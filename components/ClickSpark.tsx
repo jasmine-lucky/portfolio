@@ -30,8 +30,8 @@ const easeFuncs = {
 export default function ClickSpark({
   children,
   sparkColor = "#7EBBB8",
-  sparkSize = 8,
-  sparkRadius = 18,
+  sparkSize = 10,
+  sparkRadius = 20,
   sparkCount = 8,
   duration = 450,
   easing = "ease-out",
@@ -39,7 +39,6 @@ export default function ClickSpark({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sparksRef = useRef<Spark[]>([]);
   const animFrameRef = useRef<number>(0);
-  const containerRef = useRef<HTMLDivElement>(null);
 
   const animate = useCallback(() => {
     const canvas = canvasRef.current;
@@ -73,7 +72,7 @@ export default function ClickSpark({
       ctx.lineTo(x2, y2);
       ctx.strokeStyle = sparkColor;
       ctx.globalAlpha = alpha;
-      ctx.lineWidth = 1.5;
+      ctx.lineWidth = 1.8;
       ctx.lineCap = "round";
       ctx.stroke();
 
@@ -84,13 +83,18 @@ export default function ClickSpark({
     animFrameRef.current = requestAnimationFrame(animate);
   }, [sparkColor, sparkSize, sparkRadius, duration, easing]);
 
-  const handleClick = useCallback(
-    (e: MouseEvent) => {
-      const canvas = canvasRef.current;
-      if (!canvas) return;
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+
+    const handleClick = (e: MouseEvent) => {
+      const x = e.clientX;
+      const y = e.clientY;
 
       const newSparks: Spark[] = Array.from({ length: sparkCount }, (_, i) => ({
         x,
@@ -100,43 +104,28 @@ export default function ClickSpark({
       }));
 
       sparksRef.current.push(...newSparks);
-    },
-    [sparkCount]
-  );
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const container = containerRef.current;
-    if (!canvas || !container) return;
-
-    const resize = () => {
-      const rect = container.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
     };
 
-    const ro = new ResizeObserver(resize);
-    ro.observe(container);
     resize();
-
-    container.addEventListener("click", handleClick);
+    window.addEventListener("resize", resize);
+    document.addEventListener("click", handleClick);
     animFrameRef.current = requestAnimationFrame(animate);
 
     return () => {
-      ro.disconnect();
-      container.removeEventListener("click", handleClick);
+      window.removeEventListener("resize", resize);
+      document.removeEventListener("click", handleClick);
       cancelAnimationFrame(animFrameRef.current);
     };
-  }, [handleClick, animate]);
+  }, [sparkCount, animate]);
 
   return (
-    <div ref={containerRef} className="relative">
+    <>
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 pointer-events-none z-50"
+        className="fixed inset-0 pointer-events-none z-[9999]"
         aria-hidden="true"
       />
       {children}
-    </div>
+    </>
   );
 }

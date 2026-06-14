@@ -42,23 +42,23 @@ export default function ImageLightbox({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-[200] flex items-center justify-center bg-dark/90 backdrop-blur-sm p-4 md:p-8"
+          className="fixed inset-0 z-[200] flex items-center justify-center bg-dark/90 backdrop-blur-sm p-2 md:p-8"
           onClick={onClose}
         >
           <button
             onClick={onClose}
-            className="absolute top-6 right-6 text-white/60 hover:text-white text-sm tracking-widest transition-colors z-10"
+            className="absolute top-4 right-4 md:top-6 md:right-6 text-white/60 hover:text-white text-xs md:text-sm tracking-widest transition-colors z-10 bg-dark/40 px-3 py-1.5 rounded-full"
           >
             关闭 ✕
           </button>
           <motion.img
-            initial={{ scale: 0.9, opacity: 0 }}
+            initial={{ scale: 0.92, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
+            exit={{ scale: 0.92, opacity: 0 }}
             transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
             src={src}
             alt={alt}
-            className="max-w-full max-h-[90vh] object-contain rounded-lg"
+            className="max-w-[98vw] max-h-[85vh] object-contain rounded-lg"
             onClick={(e) => e.stopPropagation()}
           />
         </motion.div>
