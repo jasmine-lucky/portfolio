@@ -10,10 +10,10 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: "温梓清 · 内容运营人",
   description:
-    "我做了540万次曝光，现在想用AI把它变成5400万 — 温梓清的个人作品集",
+    "我做了550w+次曝光，现在想用AI把它变成5500w — 温梓清的个人作品集",
   openGraph: {
     title: "温梓清 · 内容运营人",
-    description: "我做了540万次曝光，现在想用AI把它变成5400万",
+    description: "我做了550w+次曝光，现在想用AI把它变成5500w",
   },
 };
 

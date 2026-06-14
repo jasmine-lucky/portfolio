@@ -5,8 +5,6 @@ import { motion } from "framer-motion";
 const creativeWorks = [
   { title: "海报设计 1", image: "/images/creative/poster-1.png", category: "海报" },
   { title: "海报设计 2", image: "/images/creative/poster-2.png", category: "海报" },
-  { title: "红包封面设计 1", image: "/images/creative/hongbao-1.png", category: "品牌" },
-  { title: "红包封面设计 2", image: "/images/creative/hongbao-2.png", category: "品牌" },
   { title: "文创设计 1", image: "/images/creative/culture-1.png", category: "文创" },
   { title: "文创设计 2", image: "/images/creative/culture-2.png", category: "文创" },
   { title: "泡面包装设计 1", image: "/images/creative/noodle-1.png", category: "包装" },

@@ -74,13 +74,13 @@ export default function Hero() {
                 className="text-lg md:text-xl text-ink leading-relaxed tracking-wide"
                 style={{ fontFamily: "var(--font-serif)" }}
               >
-                我做了540万次曝光，
+                我做了550w+次曝光，
               </p>
               <p
                 className="text-lg md:text-xl text-mint leading-relaxed tracking-wide mt-0.5"
                 style={{ fontFamily: "var(--font-serif)" }}
               >
-                现在想用AI把它变成5400万
+                现在想用AI把它变成5500w
               </p>
             </motion.div>
 

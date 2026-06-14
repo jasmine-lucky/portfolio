@@ -1,13 +1,45 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
-import ImageLightbox from "./ImageLightbox";
+import CardSwap from "./CardSwap";
 
-const accountSlots = [
-  { id: 1, title: "TikTok账号 1", desc: "待补充", image: "" },
-  { id: 2, title: "TikTok账号 2", desc: "待补充", image: "" },
-  { id: 3, title: "TikTok账号 3", desc: "待补充", image: "" },
+const overseasCards = [
+  {
+    id: 1,
+    image: "",
+    title: "TikTok官号矩阵 · 菲鹿儿",
+    subtitle: "百万级账号定位 · 85.7万+总播放",
+  },
+  {
+    id: 2,
+    image: "",
+    title: "爆款短视频 · 15支百万播放",
+    subtitle: "CVR 28.6% · CTR 4.99% · ROI 3.6",
+  },
+  {
+    id: 3,
+    image: "",
+    title: "单视频GMV 156→1470元",
+    subtitle: "爆款复制闭环 · 投放ROI 2.8",
+  },
+  {
+    id: 4,
+    image: "",
+    title: "150+篇产品脚本产出",
+    subtitle: "编导-模特-剪辑高效协作模式",
+  },
+  {
+    id: 5,
+    image: "",
+    title: "人效提升50% · 日产2→3条",
+    subtitle: "爆款脚本溯源库 · 素材模块化沉淀",
+  },
+  {
+    id: 6,
+    image: "",
+    title: "海外社媒内容运营全流程",
+    subtitle: "TikTok · Instagram · 东南亚市场",
+  },
 ];
 
 const viralSlots = Array.from({ length: 6 }, (_, i) => ({
@@ -19,17 +51,6 @@ const viralSlots = Array.from({ length: 6 }, (_, i) => ({
 }));
 
 export default function OverseasSection() {
-  const [lightboxSrc, setLightboxSrc] = useState("");
-  const [lightboxAlt, setLightboxAlt] = useState("");
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-
-  const openLightbox = (src: string, alt: string) => {
-    if (!src) return;
-    setLightboxSrc(src);
-    setLightboxAlt(alt);
-    setLightboxOpen(true);
-  };
-
   return (
     <section id="overseas" className="py-20 md:py-28 px-6 md:px-12 bg-[#F5F0E8]/50 relative overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-mint/30 to-transparent" />
@@ -54,47 +75,25 @@ export default function OverseasSection() {
           </p>
         </motion.div>
 
-        {/* === 3 Account slots === */}
+        {/* Card Swap auto-rotating showcase */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1, duration: 0.5 }}
-          className="mb-12"
+          className="mb-14"
         >
-          <h3 className="text-sm font-medium text-ink tracking-wide mb-4 flex items-center gap-2">
-            <span>🌍</span> 运营账号展示
-            <span className="text-[10px] text-ink-secondary font-normal ml-auto">
-              点击卡片查看详情
-            </span>
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {accountSlots.map((slot, i) => (
-              <div
-                key={slot.id}
-                onClick={() => slot.image && openLightbox(slot.image, slot.title)}
-                className={`card p-6 md:p-8 text-center min-h-[200px] flex flex-col items-center justify-center ${
-                  slot.image ? "cursor-pointer" : ""
-                }`}
-              >
-                <div className="text-3xl md:text-4xl mb-4">
-                  {slot.image ? "📱" : "📋"}
-                </div>
-                <h4 className="text-base font-medium text-ink tracking-wide mb-2">
-                  {slot.title}
-                </h4>
-                <p className="text-xs text-ink-secondary tracking-wider mb-3">
-                  {slot.desc}
-                </p>
-                <span className="text-[10px] text-mint/60 tracking-widest">
-                  {slot.image ? "点击查看" : "截图待补充"}
-                </span>
-              </div>
-            ))}
-          </div>
+          <CardSwap
+            items={overseasCards}
+            interval={3500}
+            className="max-w-md mx-auto"
+          />
+          <p className="text-[10px] text-ink-secondary/50 text-center mt-4 tracking-wide">
+            📌 请将海外账号截图放入对应卡片的 image 字段
+          </p>
         </motion.div>
 
-        {/* === 6 Viral post slots with video links === */}
+        {/* 6 Viral post slots */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -109,17 +108,9 @@ export default function OverseasSection() {
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {viralSlots.map((slot) => (
-              <div
-                key={slot.id}
-                className="card p-4 space-y-3"
-              >
+              <div key={slot.id} className="card p-4 space-y-3">
                 {/* Cover placeholder */}
-                <div
-                  onClick={() => slot.image && openLightbox(slot.image, slot.title)}
-                  className={`w-full aspect-[9/16] bg-[#D9CCB8]/15 rounded-lg flex items-center justify-center ${
-                    slot.image ? "cursor-pointer" : ""
-                  }`}
-                >
+                <div className="w-full aspect-[9/16] bg-[#D9CCB8]/15 rounded-lg flex items-center justify-center">
                   {slot.image ? (
                     <img
                       src={slot.image}
@@ -135,33 +126,18 @@ export default function OverseasSection() {
                     </div>
                   )}
                 </div>
-
-                {/* Info */}
                 <div>
-                  <h4 className="text-sm font-medium text-ink tracking-wide">
-                    {slot.title}
-                  </h4>
-                  <p className="text-[11px] text-ink-secondary mt-0.5">
-                    {slot.desc}
-                  </p>
+                  <h4 className="text-sm font-medium text-ink tracking-wide">{slot.title}</h4>
+                  <p className="text-[11px] text-ink-secondary mt-0.5">{slot.desc}</p>
                 </div>
-
-                {/* Video link */}
                 <div>
                   {slot.videoLink ? (
-                    <a
-                      href={slot.videoLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-xs mint-link"
-                    >
-                      <span>▶ 观看视频</span>
-                      <span>→</span>
+                    <a href={slot.videoLink} target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-xs mint-link">
+                      <span>▶ 观看视频</span><span>→</span>
                     </a>
                   ) : (
-                    <span className="text-[10px] text-ink-secondary/30 tracking-wider">
-                      视频链接待补充
-                    </span>
+                    <span className="text-[10px] text-ink-secondary/30 tracking-wider">视频链接待补充</span>
                   )}
                 </div>
               </div>
@@ -169,7 +145,6 @@ export default function OverseasSection() {
           </div>
         </motion.div>
 
-        {/* Bottom note */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -182,13 +157,6 @@ export default function OverseasSection() {
           </p>
         </motion.div>
       </div>
-
-      <ImageLightbox
-        src={lightboxSrc}
-        alt={lightboxAlt}
-        isOpen={lightboxOpen}
-        onClose={() => setLightboxOpen(false)}
-      />
     </section>
   );
 }

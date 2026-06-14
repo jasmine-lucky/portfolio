@@ -5,9 +5,9 @@ import { motion } from "framer-motion";
 import ImageLightbox from "./ImageLightbox";
 
 const stats = [
-  { value: "540万+", label: "总曝光" },
+  { value: "550w+", label: "总曝光" },
   { value: "5,959", label: "粉丝" },
-  { value: "19.9万", label: "获赞与收藏" },
+  { value: "20w+", label: "获赞与收藏" },
   { value: "16+篇", label: "爆款笔记" },
 ];
 
@@ -49,7 +49,7 @@ export default function JasmineFeatured() {
           </div>
           <h2 className="section-title">Jasmine清清</h2>
           <p className="section-subtitle mt-2">
-            小红书时尚区 · 从0到5959粉丝 · 用内容力验证「素人0成本起号」可行性
+            小红书时尚区 · 从0到全网1w粉丝 · 用内容力验证「素人0成本起号」可行性
           </p>
         </motion.div>
 
@@ -120,14 +120,30 @@ export default function JasmineFeatured() {
             className="card p-5 md:p-6"
           >
             <h3 className="text-sm font-medium text-ink tracking-wide mb-3">
-              🎯 内容定位
+              🎯 内容定位 &amp; 赛道选择
             </h3>
-            <p className="text-sm text-ink-secondary leading-relaxed">
+            <p className="text-sm text-ink-secondary leading-relaxed mb-3">
               主打「菱形脸 + 短发」的发型与拍照技巧，核心解决高颧骨、头型不流畅、上镜显脸大等痛点。
               面向18-28岁学生与职场新人，用原相机真实教程建立信任，差异化于精修棚拍类时尚内容。
             </p>
+            <div className="bg-[#ECE3D5]/50 rounded-lg p-4 space-y-2 mb-3">
+              <p className="text-xs text-ink-secondary leading-relaxed">
+                <span className="font-medium text-ink">📊 为什么选这个赛道？</span><br />
+                通过千瓜数据对时尚区头部博主进行系统性分析后发现：发型教程领域的内容供给远低于穿搭和美妆，
+                竞争尚未饱和，存在明显的流量洼地。结合AI工具（ChatGPT）抓取小红书当下热点话题与用户高频搜索词，
+                验证了「菱形脸发型改造」这一细分方向具有高搜索量+低竞争度的蓝海特征，于是精准切入。
+              </p>
+            </div>
+            <div className="bg-[#ECE3D5]/50 rounded-lg p-4">
+              <p className="text-xs text-ink-secondary leading-relaxed">
+                <span className="font-medium text-ink">🤖 AI在创作中的角色</span><br />
+                用ChatGPT分析同类爆款笔记的高频关键词与情感节奏，辅助优化标题和开头钩子；
+                用AI拆解热门话题标签的关联图谱，发现「山羊角自救」「菱形脸短发」等长尾关键词，
+                将其融入内容矩阵，使选题精准度与爆款率显著提升。
+              </p>
+            </div>
             <div className="flex flex-wrap gap-2 mt-4">
-              {["菱形脸", "发型教程", "原相机", "真实感"].map((tag) => (
+              {["菱形脸", "发型教程", "原相机", "真实感", "数据选赛道", "AI辅助选题"].map((tag) => (
                 <span key={tag} className="mint-tag">{tag}</span>
               ))}
             </div>

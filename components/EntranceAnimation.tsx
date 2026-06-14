@@ -8,10 +8,10 @@ interface Props {
 }
 
 const numbers = [
-  { value: "540万", label: "曝光" },
-  { value: "跨国", label: "运营经验" },
-  { value: "5959", label: "粉丝" },
-  { value: "19.9万", label: "赞藏" },
+  { value: "550w+", label: "曝光" },
+  { value: "海外+国内", label: "运营经验" },
+  { value: "全网1w", label: "粉丝" },
+  { value: "20w+", label: "赞藏" },
 ];
 
 export default function EntranceAnimation({ onComplete }: Props) {

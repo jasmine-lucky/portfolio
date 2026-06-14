@@ -8,7 +8,7 @@ const accounts = [
     name: "Jasmine清清",
     platform: "小红书 · 时尚区",
     followers: "5,806 粉丝",
-    metric: "540万 曝光",
+    metric: "550w+ 曝光",
     description:
       "从0粉做到5800+粉丝，单篇笔记最高播放量破百万，累计产出15+篇爆文笔记。通过数据分析和内容策略持续优化，在时尚穿搭赛道建立个人IP。",
     tags: ["数据驱动", "爆款内容", "个人IP"],
