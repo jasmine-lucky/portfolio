@@ -23,8 +23,8 @@ export default function Hero() {
         className="absolute left-8 md:left-16 top-1/3 w-[2px] h-[120px] bg-mint origin-top hidden md:block"
       />
 
-      <div className="max-w-4xl mx-auto px-6 md:px-16 w-full">
-        {/* Background decorative text */}
+      <div className="max-w-5xl mx-auto px-6 md:px-16 w-full">
+        {/* Background decorative */}
         <div
           className="absolute right-8 md:right-16 top-1/4 text-[10rem] md:text-[16rem] font-bold text-[#D9CCB8]/15 select-none pointer-events-none leading-none"
           style={{ fontFamily: "var(--font-display)" }}
@@ -32,82 +32,95 @@ export default function Hero() {
           W
         </div>
 
-        <div className="relative z-10">
-          {/* Name */}
-          <motion.h1
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.4, duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
-            className="text-5xl md:text-7xl tracking-widest text-ink mb-6"
-            style={{ fontFamily: "var(--font-serif)" }}
-          >
-            温 梓 清
-          </motion.h1>
-
-          {/* Tagline */}
+        <div className="relative z-10 flex flex-col md:flex-row items-center gap-10 md:gap-16">
+          {/* Photo */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
-            className="mb-8"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.5, duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+            className="flex-shrink-0"
           >
-            <p
-              className="text-xl md:text-3xl text-ink leading-relaxed tracking-wide"
-              style={{ fontFamily: "var(--font-serif)" }}
-            >
-              我做了540万次曝光，
-            </p>
-            <p
-              className="text-xl md:text-3xl text-mint leading-relaxed tracking-wide mt-1"
-              style={{ fontFamily: "var(--font-serif)" }}
-            >
-              现在想用AI把它变成5400万
-            </p>
+            <div className="w-36 h-36 md:w-48 md:h-48 rounded-full overflow-hidden border-2 border-mint/30 shadow-lg">
+              <img
+                src="/images/photo.jpg"
+                alt="温梓清"
+                className="w-full h-full object-cover"
+              />
+            </div>
           </motion.div>
 
-          {/* Subtitle */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.0, duration: 0.6 }}
-            className="text-base text-ink-secondary tracking-widest mb-10"
-          >
-            内容运营人 · 2026届应届生
-          </motion.p>
+          {/* Text */}
+          <div className="text-center md:text-left">
+            <motion.h1
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.4, duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+              className="text-4xl md:text-6xl tracking-widest text-ink mb-6"
+              style={{ fontFamily: "var(--font-serif)" }}
+            >
+              温 梓 清
+            </motion.h1>
 
-          {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.3, duration: 0.6 }}
-            className="flex flex-wrap gap-4"
-          >
-            <button
-              onClick={scrollToAccounts}
-              className="px-8 py-3 bg-mint text-white rounded-full text-sm tracking-widest hover:bg-mint-dark transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-mint/20"
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7, duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+              className="mb-6"
             >
-              查看我的作品 ↓
-            </button>
-            <button
-              onClick={scrollToContact}
-              className="px-8 py-3 border border-mint text-mint rounded-full text-sm tracking-widest hover:bg-mint hover:text-white transition-all duration-300 hover:-translate-y-0.5"
+              <p
+                className="text-lg md:text-2xl text-ink leading-relaxed tracking-wide"
+                style={{ fontFamily: "var(--font-serif)" }}
+              >
+                我做了540万次曝光，
+              </p>
+              <p
+                className="text-lg md:text-2xl text-mint leading-relaxed tracking-wide mt-1"
+                style={{ fontFamily: "var(--font-serif)" }}
+              >
+                现在想用AI把它变成5400万
+              </p>
+            </motion.div>
+
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.0, duration: 0.6 }}
+              className="text-sm text-ink-secondary tracking-widest mb-8"
             >
-              直接联系 →
-            </button>
-          </motion.div>
+              内容运营人 · 2026届应届生
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.3, duration: 0.6 }}
+              className="flex flex-wrap gap-4 justify-center md:justify-start"
+            >
+              <button
+                onClick={scrollToAccounts}
+                className="px-8 py-3 bg-mint text-white rounded-full text-sm tracking-widest hover:bg-mint-dark transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-mint/20"
+              >
+                查看我的作品 ↓
+              </button>
+              <button
+                onClick={scrollToContact}
+                className="px-8 py-3 border border-mint text-mint rounded-full text-sm tracking-widest hover:bg-mint hover:text-white transition-all duration-300 hover:-translate-y-0.5"
+              >
+                直接联系 →
+              </button>
+            </motion.div>
+          </div>
         </div>
       </div>
 
-      {/* Bottom scroll hint */}
+      {/* Scroll hint */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.8, duration: 0.6 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
-        <span className="text-xs text-ink-secondary tracking-widest">
-          向下滚动
-        </span>
+        <span className="text-xs text-ink-secondary tracking-widest">向下滚动</span>
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}

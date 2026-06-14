@@ -7,19 +7,19 @@ const socialLinks = [
     label: "小红书",
     sub: "时尚号",
     desc: "Jasmine清清",
-    link: "#",
+    link: "https://www.xiaohongshu.com/user/profile/65524ed00000000002013808?xsec_token=ABXEoqwjGTpn_ddtr_R6NKzJUNT5Ho_DQbHByzZx-hUdk%3D&xsec_source=pc_search",
   },
   {
-    label: "抖音",
-    sub: "账号",
-    desc: "内容创作",
-    link: "#",
+    label: "小红书",
+    sub: "美妆号",
+    desc: "书书日记",
+    link: "https://www.xiaohongshu.com/user/profile/65a0178000000000220092a4?xsec_token=ABv_fwBFE8oHevDSFq6KY3xvjKzQ8nnmTT_DaP49jkr6E%3D&xsec_source=pc_search",
   },
   {
-    label: "B站",
-    sub: "游戏区",
-    desc: "90.3万播放",
-    link: "#",
+    label: "小红书",
+    sub: "情绪号",
+    desc: "AI辅助起号",
+    link: "https://www.xiaohongshu.com/user/profile/686c7500000000001d009f05?xsec_token=ABvJJ_h0f_e5U-Vc3oLAXyt8UW1ETIvLtJpOzS5ippoS0%3D&xsec_source=pc_search",
   },
   {
     label: "公众号",
@@ -34,7 +34,6 @@ export default function Contact() {
     <section id="contact" className="py-24 md:py-32 px-6 md:px-12 bg-dark">
       <div className="max-w-5xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20">
-          {/* Left: Info */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -71,7 +70,6 @@ export default function Contact() {
             </div>
           </motion.div>
 
-          {/* Right: Social links */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -84,7 +82,7 @@ export default function Contact() {
             <div className="grid grid-cols-2 gap-3">
               {socialLinks.map((link) => (
                 <a
-                  key={link.label}
+                  key={link.label + link.sub}
                   href={link.link}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -93,12 +91,8 @@ export default function Contact() {
                   <p className="text-mint text-sm font-medium tracking-wider group-hover:text-mint-light transition-colors">
                     {link.label}
                   </p>
-                  <p className="text-[#787878] text-xs mt-1">
-                    {link.sub}
-                  </p>
-                  <p className="text-[#F5F0E8]/50 text-xs mt-0.5">
-                    {link.desc}
-                  </p>
+                  <p className="text-[#787878] text-xs mt-1">{link.sub}</p>
+                  <p className="text-[#F5F0E8]/50 text-xs mt-0.5">{link.desc}</p>
                 </a>
               ))}
             </div>

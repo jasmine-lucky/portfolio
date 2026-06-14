@@ -17,7 +17,7 @@ const accounts = [
       "/images/accounts/jasmine-2.png",
       "/images/accounts/jasmine-3.png",
     ],
-    link: "#",
+    link: "https://www.xiaohongshu.com/user/profile/65524ed00000000002013808?xsec_token=ABXEoqwjGTpn_ddtr_R6NKzJUNT5Ho_DQbHByzZx-hUdk%3D&xsec_source=pc_search",
   },
   {
     name: "情绪号",
@@ -31,7 +31,7 @@ const accounts = [
       "/images/accounts/emotion-1.png",
       "/images/accounts/emotion-2.png",
     ],
-    link: "#",
+    link: "https://www.xiaohongshu.com/user/profile/686c7500000000001d009f05?xsec_token=ABvJJ_h0f_e5U-Vc3oLAXyt8UW1ETIvLtJpOzS5ippoS0%3D&xsec_source=pc_search",
   },
   {
     name: "书书日记",
@@ -45,20 +45,7 @@ const accounts = [
       "/images/accounts/shushu-1.png",
       "/images/accounts/shushu-2.png",
     ],
-    link: "#",
-  },
-  {
-    name: "游戏区",
-    platform: "B站 · 游戏区",
-    followers: "1,600 粉丝",
-    metric: "90.3万 播放",
-    description:
-      "3条游戏视频累计获得90.3万播放量，其中单条视频72小时内突破41.7万播放，验证了跨平台内容创作的能力。",
-    tags: ["视频创作", "跨平台", "爆款视频"],
-    images: [
-      "/images/accounts/bilibili-1.png",
-    ],
-    link: "#",
+    link: "https://www.xiaohongshu.com/user/profile/65a0178000000000220092a4?xsec_token=ABv_fwBFE8oHevDSFq6KY3xvjKzQ8nnmTT_DaP49jkr6E%3D&xsec_source=pc_search",
   },
 ];
 
@@ -66,7 +53,6 @@ export default function AccountsSection() {
   return (
     <section id="accounts" className="py-24 md:py-32 px-6 md:px-12">
       <div className="max-w-6xl mx-auto">
-        {/* Section header */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -74,16 +60,11 @@ export default function AccountsSection() {
           transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
           className="mb-12"
         >
-          <h2 className="section-title mb-3">
-            内容是我的基本功
-          </h2>
-          <p className="section-subtitle">
-            从0到1，数据为证
-          </p>
+          <h2 className="section-title mb-3">内容是我的基本功</h2>
+          <p className="section-subtitle">从0到1，数据为证</p>
         </motion.div>
 
-        {/* Account cards grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {accounts.map((account, i) => (
             <AccountCard key={account.name} {...account} index={i} />
           ))}
