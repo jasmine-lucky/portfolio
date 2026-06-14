@@ -15,14 +15,13 @@ const numbers = [
 ];
 
 export default function EntranceAnimation({ onComplete }: Props) {
-  const [phase, setPhase] = useState<"numbers" | "pressure" | "reveal" | "done">("numbers");
+  const [phase, setPhase] = useState<"hello" | "explode" | "numbers" | "tagline" | "reveal" | "done">("hello");
   const [visibleNumbers, setVisibleNumbers] = useState<number>(0);
   const [mousePos, setMousePos] = useState<{ x: number; y: number } | null>(null);
   const [viewSize, setViewSize] = useState({ w: 1200, h: 800 });
   const containerRef = useRef<HTMLDivElement>(null);
   const [skipped, setSkipped] = useState(false);
 
-  // Track viewport size
   useEffect(() => {
     const update = () => setViewSize({ w: window.innerWidth, h: window.innerHeight });
     update();
@@ -30,19 +29,16 @@ export default function EntranceAnimation({ onComplete }: Props) {
     return () => window.removeEventListener("resize", update);
   }, []);
 
-  // Phase timing
   useEffect(() => {
     if (skipped) return;
-    const t1 = setTimeout(() => setPhase("pressure"), 2400);
-    const t2 = setTimeout(() => setPhase("reveal"), 4000);
-    const t3 = setTimeout(() => {
-      setPhase("done");
-      onComplete();
-    }, 5000);
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+    const t1 = setTimeout(() => setPhase("explode"), 2000);
+    const t2 = setTimeout(() => setPhase("numbers"), 2800);
+    const t3 = setTimeout(() => setPhase("tagline"), 4400);
+    const t4 = setTimeout(() => setPhase("reveal"), 5400);
+    const t5 = setTimeout(() => { setPhase("done"); onComplete(); }, 6200);
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); clearTimeout(t5); };
   }, [skipped, onComplete]);
 
-  // Stagger numbers
   useEffect(() => {
     if (phase !== "numbers" || skipped) return;
     const interval = setInterval(() => {
@@ -50,19 +46,38 @@ export default function EntranceAnimation({ onComplete }: Props) {
         if (prev >= numbers.length) { clearInterval(interval); return prev; }
         return prev + 1;
       });
-    }, 400);
+    }, 350);
     return () => clearInterval(interval);
   }, [phase, skipped]);
 
-  // Auto-moving cursor for TextPressure effect — sweeps across text
+  // Auto-cursor for Hello phase — dramatic sweeps
   useEffect(() => {
-    if (phase !== "pressure") return;
+    if (phase !== "hello") return;
     let frame: number;
     const start = Date.now();
     const animate = () => {
       const t = (Date.now() - start) / 1000;
-      const x = viewSize.w / 2 + Math.sin(t * 0.7) * viewSize.w * 0.42;
-      const y = viewSize.h / 2 + Math.cos(t * 1.4) * viewSize.h * 0.1;
+      // Dramatic sweep: left to right, then figure-8
+      const x = t < 0.6
+        ? viewSize.w * 0.15 + (t / 0.6) * viewSize.w * 0.7  // sweep across
+        : viewSize.w / 2 + Math.sin((t - 0.6) * 1.2) * viewSize.w * 0.35;
+      const y = viewSize.h / 2 + Math.cos(t * 0.8) * viewSize.h * 0.08;
+      setMousePos({ x, y });
+      frame = requestAnimationFrame(animate);
+    };
+    frame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(frame);
+  }, [phase, viewSize]);
+
+  // Auto-cursor for tagline phase
+  useEffect(() => {
+    if (phase !== "tagline") return;
+    let frame: number;
+    const start = Date.now();
+    const animate = () => {
+      const t = (Date.now() - start) / 1000;
+      const x = viewSize.w / 2 + Math.sin(t * 0.7) * viewSize.w * 0.4;
+      const y = viewSize.h / 2 + Math.cos(t * 1.3) * viewSize.h * 0.08;
       setMousePos({ x, y });
       frame = requestAnimationFrame(animate);
     };
@@ -85,19 +100,39 @@ export default function EntranceAnimation({ onComplete }: Props) {
 
   const isActive = phase !== "done";
 
-  // TextPressure: chars for pressure phase
-  const tagline1 = "我做了540万次曝光";
-  const tagline2 = "现在想用AI把它变成5400万";
-  const wrapChars = (text: string, offset: number, baseSize: number) =>
+  // TextPressure: render characters with pressure-based scaling
+  const renderPressureText = (
+    text: string,
+    baseSize: number,
+    color: string,
+    offset: number,
+    total: number,
+  ) =>
     text.split("").map((char, i) => {
       const absI = offset + i;
-      const totalChars = tagline1.length + tagline2.length;
-      const scale = computePressure(absI, totalChars, mousePos, baseSize, viewSize);
-      return { char, scale, key: offset + i };
+      const scale = computePressure(absI, total, mousePos, baseSize, viewSize);
+      return (
+        <span
+          key={offset + i}
+          className="inline-block transition-all duration-[100ms] ease-out"
+          style={{
+            fontSize: `${baseSize * scale}px`,
+            fontFamily: "var(--font-display)",
+            color,
+            fontWeight: 400 + (scale - 1) * 800,
+            lineHeight: 1.1,
+            padding: "0 0.005em",
+            textShadow: scale > 1.08 ? `0 0 ${(scale - 1) * 80}px ${color}40` : "none",
+          }}
+        >
+          {char === " " ? " " : char}
+        </span>
+      );
     });
 
-  const chars1 = wrapChars(tagline1, 0, 36);
-  const chars2 = wrapChars(tagline2, tagline1.length, 36);
+  const charCountHello = 6; // "Hello!"
+  const tagline1 = "我做了540万次曝光";
+  const tagline2 = "现在想用AI把它变成5400万";
 
   return (
     <AnimatePresence>
@@ -105,26 +140,50 @@ export default function EntranceAnimation({ onComplete }: Props) {
         <motion.div
           ref={containerRef}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.5, ease: "easeInOut" }}
-          className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden"
+          transition={{ duration: 0.4, ease: "easeInOut" }}
+          className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden select-none"
           style={{ backgroundColor: "#131313" }}
           onMouseMove={handleMouseMove}
-          onMouseLeave={() => phase === "pressure" ? null : setMousePos(null)}
         >
           <button
             onClick={skip}
-            className="absolute top-4 md:top-6 right-4 md:right-8 z-10 text-xs md:text-sm tracking-wider text-mint/60 hover:text-mint transition-colors"
+            className="absolute top-4 right-4 md:top-6 md:right-8 z-10 text-xs md:text-sm tracking-wider text-white/30 hover:text-white/70 transition-colors"
           >
-            跳过动画 →
+            跳过 →
           </button>
 
-          {/* Phase 1: Numbers */}
+          {/* Phase 1: MASSIVE HELLO with TextPressure */}
+          {phase === "hello" && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.7 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+              className="text-center z-10 flex flex-wrap justify-center items-center px-4"
+            >
+              {renderPressureText("Hello!", 60, "#F5F0E8", 0, 6)}
+            </motion.div>
+          )}
+
+          {/* Phase 2: EXPLODE */}
+          {phase === "explode" && (
+            <motion.div
+              initial={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+              animate={{ opacity: 0, scale: 1.8, filter: "blur(8px)" }}
+              transition={{ duration: 0.8, ease: "easeIn" }}
+              className="text-center z-10 flex flex-wrap justify-center items-center px-4"
+              style={{ fontSize: "60px", fontFamily: "var(--font-display)", color: "#F5F0E8" }}
+            >
+              Hello!
+            </motion.div>
+          )}
+
+          {/* Phase 3: Numbers */}
           {phase === "numbers" && (
-            <div className="flex items-center gap-3 md:gap-10 flex-wrap justify-center px-4">
+            <div className="flex items-center gap-3 md:gap-10 flex-wrap justify-center px-4 z-10">
               {numbers.map((num, i) => (
                 <motion.div
                   key={num.value}
-                  initial={{ opacity: 0, scale: 0.3, filter: "blur(8px)" }}
+                  initial={{ opacity: 0, scale: 0.3, filter: "blur(10px)" }}
                   animate={
                     i < visibleNumbers
                       ? { opacity: 1, scale: 1, filter: "blur(0px)" }
@@ -150,51 +209,26 @@ export default function EntranceAnimation({ onComplete }: Props) {
             </div>
           )}
 
-          {/* Phase 2: TextPressure — characters respond to cursor proximity */}
-          {phase === "pressure" && (
-            <div className="text-center px-4 relative z-10 select-none">
+          {/* Phase 4: Tagline with TextPressure */}
+          {phase === "tagline" && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              className="text-center px-4 z-10"
+            >
               <div className="space-y-3 md:space-y-4">
                 <div className="flex flex-wrap justify-center">
-                  {chars1.map(({ char, scale, key }) => (
-                    <span
-                      key={key}
-                      className="inline-block transition-all duration-[120ms] ease-out"
-                      style={{
-                        fontSize: `${36 * scale}px`,
-                        fontFamily: "var(--font-serif)",
-                        color: "#F5F0E8",
-                        fontWeight: 400 + (scale - 1) * 600,
-                        lineHeight: 1.3,
-                        padding: "0 0.01em",
-                      }}
-                    >
-                      {char === " " ? " " : char}
-                    </span>
-                  ))}
+                  {renderPressureText(tagline1, 30, "#F5F0E8", 0, tagline1.length + tagline2.length)}
                 </div>
                 <div className="flex flex-wrap justify-center">
-                  {chars2.map(({ char, scale, key }) => (
-                    <span
-                      key={key}
-                      className="inline-block transition-all duration-[120ms] ease-out"
-                      style={{
-                        fontSize: `${36 * scale}px`,
-                        fontFamily: "var(--font-serif)",
-                        color: "#7EBBB8",
-                        fontWeight: 400 + (scale - 1) * 600,
-                        lineHeight: 1.3,
-                        padding: "0 0.01em",
-                      }}
-                    >
-                      {char === " " ? " " : char}
-                    </span>
-                  ))}
+                  {renderPressureText(tagline2, 30, "#7EBBB8", tagline1.length, tagline1.length + tagline2.length)}
                 </div>
               </div>
-            </div>
+            </motion.div>
           )}
 
-          {/* Phase 3: Reveal to main page */}
+          {/* Phase 5: Reveal */}
           {phase === "reveal" && (
             <motion.div
               initial={{ opacity: 0 }}
@@ -210,13 +244,10 @@ export default function EntranceAnimation({ onComplete }: Props) {
   );
 }
 
-// Compute pressure scale: characters near cursor get bigger/bolder
 function computePressure(
-  i: number,
-  total: number,
+  i: number, total: number,
   mousePos: { x: number; y: number } | null,
-  baseSize: number,
-  viewSize: { w: number; h: number },
+  baseSize: number, viewSize: { w: number; h: number },
 ): number {
   if (!mousePos) return 1;
   const charW = baseSize * 0.6;
@@ -227,8 +258,8 @@ function computePressure(
   const dx = mousePos.x - charX;
   const dy = mousePos.y - charY;
   const dist = Math.sqrt(dx * dx + dy * dy);
-  const radius = Math.min(viewSize.w, viewSize.h) * 0.28;
+  const radius = viewSize.w * 0.22;
   if (dist > radius) return 1;
   const strength = 1 - dist / radius;
-  return 1 + strength * strength * 0.35;
+  return 1 + strength * strength * 0.4;
 }

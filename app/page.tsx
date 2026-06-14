@@ -2,10 +2,14 @@
 
 import { useState, useCallback } from "react";
 import ClickSpark from "@/components/ClickSpark";
+import FloatingParticles from "@/components/FloatingParticles";
+import ScrollProgress from "@/components/ScrollProgress";
+import BackToTop from "@/components/BackToTop";
 import Navbar from "@/components/Navbar";
 import EntranceAnimation from "@/components/EntranceAnimation";
 import Hero from "@/components/Hero";
 import FlowingMenu from "@/components/FlowingMenu";
+import JasmineFeatured from "@/components/JasmineFeatured";
 import AccountsSection from "@/components/AccountsSection";
 import Methodology from "@/components/Methodology";
 import WorkExperience from "@/components/WorkExperience";
@@ -15,6 +19,7 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
 const menuItems = [
+  { link: "#jasmine", text: "专栏" },
   { link: "#accounts", text: "作品" },
   { link: "#experience", text: "经历" },
   { link: "#contact", text: "联系" },
@@ -32,10 +37,12 @@ export default function Home() {
       <EntranceAnimation onComplete={handleAnimationComplete} />
 
       <main
-        className={`transition-opacity duration-700 ${
+        className={`transition-opacity duration-700 relative ${
           showContent ? "opacity-100" : "opacity-0"
         }`}
       >
+        <FloatingParticles />
+        <ScrollProgress />
         <Navbar />
         <Hero />
         <FlowingMenu
@@ -46,6 +53,7 @@ export default function Home() {
           borderColor="#D9CCB8"
           speed={18}
         />
+        <JasmineFeatured />
         <AccountsSection />
         <Methodology />
         <WorkExperience />
@@ -53,6 +61,7 @@ export default function Home() {
         <CreativeWall />
         <Contact />
         <Footer />
+        <BackToTop />
       </main>
     </ClickSpark>
   );
