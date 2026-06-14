@@ -115,8 +115,8 @@ export default function Hero() {
           </div>
 
           {/* === RIGHT: Large photo + orbiting tags === */}
-          <div className="md:w-1/2 relative flex items-center justify-center">
-            <div className="relative w-[300px] h-[300px] md:w-[420px] md:h-[420px] flex items-center justify-center">
+          <div className="md:w-1/2 relative flex items-center justify-end md:pr-6">
+            <div className="relative w-[320px] h-[320px] md:w-[440px] md:h-[440px] flex items-center justify-center">
               {/* Behind layer */}
               {tagsBehind.map((tag) => {
                 const { x, y } = getTagPosition(tag.angle, tag.distance);
@@ -126,10 +126,14 @@ export default function Hero() {
                     initial={{ opacity: 0, scale: 0, x: 0, y: 0 }}
                     animate={{ opacity: 1, scale: 1, x, y }}
                     transition={{ delay: tag.delay, duration: 0.5, type: "spring", stiffness: 160, damping: 13 }}
-                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap z-0"
-                    style={{ filter: "brightness(0.8) blur(0.8px)" }}
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap z-0 animate-tag-float"
+                    style={{
+                      filter: "brightness(0.8) blur(0.8px)",
+                      animationDelay: `${tag.delay + 0.3}s`,
+                      animationDuration: `${3.5 + Math.random() * 2}s`,
+                    }}
                   >
-                    <span className="inline-block px-3 py-1.5 bg-[#EDE4D6] border border-[#D9CCB8]/30 rounded-full text-[10px] md:text-xs text-ink-secondary/70 shadow-sm hover:shadow-md hover:border-mint/30 hover:-translate-y-0.5 transition-all duration-300 cursor-default tracking-wide">
+                    <span className="inline-block px-3 py-1.5 bg-[#EDE4D6] border border-[#D9CCB8]/30 rounded-full text-[10px] md:text-xs text-ink-secondary/70 shadow-sm hover:shadow-md hover:border-mint/30 transition-all duration-300 cursor-default tracking-wide">
                       {tag.text}
                     </span>
                   </motion.div>
@@ -144,7 +148,7 @@ export default function Hero() {
                 className="relative z-10"
               >
                 <div className="absolute -inset-8 rounded-full bg-mint/5 blur-3xl" />
-                <div className="w-56 h-56 md:w-80 md:h-80 relative">
+                <div className="w-60 h-60 md:w-80 md:h-80 relative ml-4 md:ml-8">
                   <img
                     src="/images/photo.png"
                     alt="温梓清"
@@ -163,9 +167,13 @@ export default function Hero() {
                     initial={{ opacity: 0, scale: 0, x: 0, y: 0 }}
                     animate={{ opacity: 1, scale: 1, x, y }}
                     transition={{ delay: tag.delay, duration: 0.5, type: "spring", stiffness: 190, damping: 12 }}
-                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap z-20"
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap z-20 animate-tag-float"
+                    style={{
+                      animationDelay: `${tag.delay + 0.5}s`,
+                      animationDuration: `${3 + Math.random() * 2}s`,
+                    }}
                   >
-                    <span className="inline-block px-3 py-1.5 bg-[#F5F0E8] border border-mint/25 rounded-full text-[10px] md:text-xs text-ink shadow-md hover:shadow-lg hover:border-mint/60 hover:-translate-y-1 transition-all duration-300 cursor-default tracking-wide">
+                    <span className="inline-block px-3 py-1.5 bg-[#F5F0E8] border border-mint/25 rounded-full text-[10px] md:text-xs text-ink shadow-md hover:shadow-lg hover:border-mint/60 transition-all duration-300 cursor-default tracking-wide">
                       {tag.text}
                     </span>
                   </motion.div>

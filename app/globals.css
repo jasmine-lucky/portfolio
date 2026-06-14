@@ -92,6 +92,15 @@
     border-color: #7EBBB8;
     box-shadow: 0 12px 40px rgba(29, 29, 29, 0.08);
   }
+
+  .animate-tag-float {
+    animation: tagFloat var(--float-duration, 3.5s) ease-in-out infinite;
+  }
+}
+
+@keyframes tagFloat {
+  0%, 100% { margin-top: 0; }
+  50% { margin-top: -10px; }
 }
 
 @layer utilities {
