@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "deploy": "next build && node fix-images.js && bash deploy.sh"
   },
   "dependencies": {
     "next": "^14.2.0",
