@@ -62,7 +62,9 @@ export default function Contact() {
               <a
                 href="/resume.pdf"
                 download
-                className="inline-flex items-center gap-3 text-mint hover:text-mint-light transition-colors mt-2"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 mt-3 px-5 py-2.5 border border-mint/30 rounded-lg text-mint hover:bg-mint/10 active:bg-mint/20 transition-all text-sm tracking-wider"
               >
                 <span>📄</span>
                 <span>下载简历 →</span>
