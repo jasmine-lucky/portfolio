@@ -17,10 +17,10 @@ const viralCovers = Array.from({ length: 12 }, (_, i) => ({
 }));
 
 const achievements = [
-  { label: "总播放", value: "85.7万+" },
+  { label: "获赞", value: "1950万" },
   { label: "百万爆款", value: "15支" },
   { label: "最高CVR", value: "28.6%" },
-  { label: "投放ROI", value: "3.6" },
+  { label: "投放ROI", value: "5" },
 ];
 
 export default function OverseasSection() {
@@ -190,7 +190,7 @@ export default function OverseasSection() {
         </motion.div>
 
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.4, duration: 0.5 }} className="mt-8 text-center">
-          <p className="text-xs text-ink-secondary/50 tracking-wide">📌 素材来源：菲鹿儿海外TikTok矩阵账号</p>
+          <p className="text-xs text-ink-secondary/50 tracking-wide">📌 素材来源：菲鹿儿海外TikTok账号</p>
         </motion.div>
       </div>
       <style jsx>{`
